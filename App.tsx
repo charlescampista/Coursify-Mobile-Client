@@ -6,6 +6,8 @@ import {
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
 import { Routes } from "./src/routes";
+import { SafeAreaView, Text } from "react-native";
+import { Footer } from "./src/components/Footer";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -17,5 +19,10 @@ export default function App() {
     return <AppLoading />;
   }
 
-  return <Routes />;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <Routes />
+      <Footer />
+    </SafeAreaView>
+  );
 }
