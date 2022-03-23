@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Text, View, FlatList } from "react-native";
+import { Categories } from "../../components/Categories";
 import { Category } from "../../data/@types/Category";
 import { getCategories } from "../../services/categoryServices";
 import {
@@ -69,11 +70,7 @@ export function Home() {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={categories}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Text>{item.name}</Text>}
-      />
+      <Categories categories={categories} />
     </View>
   );
 }
