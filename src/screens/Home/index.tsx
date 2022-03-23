@@ -1,4 +1,6 @@
-import { Text, View } from "react-native";
+import { useState, useEffect } from "react";
+import { Text, View, FlatList } from "react-native";
+import { Category } from "../../data/@types/Category";
 import { getCategories } from "../../services/categoryServices";
 import {
   getAllMedia,
@@ -14,9 +16,16 @@ import {
 import { styles } from "./styles";
 
 export function Home() {
-  async function fetchCategories() {
-    let categories = await getCategories(2);
-    console.log("Categories: " + categories.data);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  function fetchCategories() {
+    getCategories(10).then((response) => {
+      setCategories(response);
+    });
   }
 
   async function fetchPosts() {
@@ -49,18 +58,22 @@ export function Home() {
     console.log("Media Piece: " + media.data);
   }
 
-  fetchCategories();
-  fetchPosts();
-  fetchPostsByCategory();
-  fetchPostsByCategory();
-  fetchPostById();
-  fetchAllMedia();
-  fetchSpecificMedia();
-  fetchMediaById();
+  //fetchCategories();
+  // fetchPosts();
+  // fetchPostsByCategory();
+  // fetchPostsByCategory();
+  // fetchPostById();
+  // fetchAllMedia();
+  // fetchSpecificMedia();
+  // fetchMediaById();
 
   return (
     <View style={styles.container}>
-      <Text>It Works</Text>
+      <FlatList
+        data={categories}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <Text>{item.name}</Text>}
+      />
     </View>
   );
 }
