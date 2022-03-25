@@ -4,6 +4,7 @@ import { theme } from "../global/styles/theme";
 
 import { Home } from "../screens/Home";
 import { Article } from "../screens/Article";
+import { TopBar } from "../components/TopBar";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -14,6 +15,7 @@ export function AppRoutes() {
         cardStyle: {
           backgroundColor: theme.colors.white,
         },
+        headerTitle: () => <TopBar />,
       }}
     >
       <Screen name="Home" component={Home} />

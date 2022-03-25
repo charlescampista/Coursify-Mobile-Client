@@ -1,10 +1,14 @@
 import { Text, View, Image } from "react-native";
 import { Button } from "../Button";
 import { styles } from "./styles";
-
+import * as Linking from "expo-linking";
 import coursifyWhiteLogo from "../../../assets/logo-coursify-w.png";
 
 export function Footer() {
+  function handleButtonClick() {
+    Linking.openURL("https://coursify.me/");
+  }
+
   return (
     <View style={styles.container}>
       <Image
@@ -19,7 +23,10 @@ export function Footer() {
         </Text>
       </View>
       <View style={styles.button}>
-        <Button title="Quero conhecer a plataforma!" />
+        <Button
+          title="Quero conhecer a plataforma!"
+          handleClick={handleButtonClick}
+        />
       </View>
     </View>
   );
