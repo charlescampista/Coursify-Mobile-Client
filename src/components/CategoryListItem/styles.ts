@@ -22,7 +22,6 @@ export const styles = StyleSheet.create({
     textAlign: "left",
   },
   more: {
-    //backgroundColor: theme.colors.buttonOrange,
     color: theme.colors.darkText,
     fontFamily: theme.fonts.readMore,
     fontSize: 17,

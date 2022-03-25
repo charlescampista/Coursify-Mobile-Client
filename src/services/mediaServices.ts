@@ -1,3 +1,4 @@
+import { Media } from "../data/@types/Media";
 import { api } from "./api";
 
 export const getAllMedia = async (quantityPerPage: number) => {
@@ -16,8 +17,9 @@ export const getSpecificMedia = async (
   );
 };
 
-export const getMediaPieceById = async (mediaId: number) => {
-  return await api.get(`/media/${mediaId}`);
+export const getMediaPieceById = async (mediaId: number): Promise<Media> => {
+  let response = await api.get(`/media/${mediaId}`);
+  return convertObjectToMedia(response.data);
 };
 
 //Utilitary functions bellow
@@ -29,6 +31,13 @@ function convertParamsToString(idList: number[]) {
     if (!next) return;
     idsString += ",";
   });
-  console.log(idsString);
   return idsString;
+}
+
+function convertObjectToMedia(object: any): Media {
+  return {
+    id: object.id,
+    title: object.title.rendered,
+    details: object.media_details.sizes,
+  } as Media;
 }
