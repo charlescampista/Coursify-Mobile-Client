@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.charlescampista.coursifymobileclient"
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -6,6 +6,8 @@ import { styles } from "./styles";
 import RenderHtml from "react-native-render-html";
 import { getMediaPieceById } from "../../services/mediaServices";
 import { Media } from "../../data/@types/Media";
+import { theme } from "../../global/styles/theme";
+import { Load } from "../Load";
 type Props = {
   post: Post;
 };
@@ -56,7 +58,7 @@ export function PostListItem({ post, ...rest }: Props) {
   } else {
     return (
       <View style={styles.container}>
-        <Text style={styles.readMore}>Carregando Midia</Text>
+        <Load />
       </View>
     );
   }
