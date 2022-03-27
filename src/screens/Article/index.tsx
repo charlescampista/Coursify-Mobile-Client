@@ -5,54 +5,59 @@ import { Load } from "../../components/Load";
 import { styles } from "./styles";
 export function Article(props: any) {
   let htmlStyle = `<style>
-                        #height-calculator {
-                          margin: 0;
-                          padding: 0;
-                        }
-                        #height-calculator {
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            right: 0;
-                            margin: 0;
-                            padding: 0;
-                        }
+                        
                         body {
-                          width:100%;
+                          display: flex;
+                          flex-direction: column;
+                          align-items: center;
                         }
                         h2 {
-                          font-size: 48px;
+                          font-size: 3em;
                           text-align: center;
+                          color: #2AB598
                         }
                         p {
-                          font-size: 18px;
+                          font-size: 2.3em;
                           color: #999
                         }
                         h3 {
-                          font-size: 32px
-                        }
-                        img {
-                          width:98%;
+                          font-size: 2.5em;
+                          text-align: center;
+                          color: #2AB598
                         }
                         td {
                           display: block !important;
                           width: 95% !important;
                         }
-                        img {
-                          width:98%;
-                        }
                         hr {
-                          width: 98%;
+                          width:100%;
+                          margin: 1em;
                         }
+                        img {
+                          width: 100%
+                        }
+                        a {
+                          font-size: 2.3em;
+                          color: #FDA506;
+                        }
+
+                        a {
+                          font-size: 2.3em;
+                          color: #FDA506;
+                        }
+
+
+
                         ol li ol li ol li {
-                          position: relative; right: 85px;
+                          position: relative; right: 2.3em;
                         }
                         ul {
                           width: 98%,
                           margin-left: -25px;
                         }
                         li {
-                          width: 98%;
+                          width:100%;
+                          margin: 1em;
                         }
                         .tabs {
                           display: none;
@@ -70,20 +75,41 @@ export function Article(props: any) {
                         }
                </style>`;
 
+  const titleStyle = `
+    <style>
+    .title {
+      display: flex;
+      color: #2ab598;
+      font-size: 3.7em;
+      font-family: "Roboto";
+      font-weight: bold;
+      margin: 0.8em 0.5em ;
+      text-align: center;
+    }
+    </style>
+  `;
+  const titleTag = `
+    <span class="title">
+    ${props.route.params.post.title}
+    </span>
+  `;
+
   if (props.route.params.post) {
     return (
       <View style={styles.container}>
-        <RenderHtml
-          contentWidth={300}
-          source={{ html: props.route.params.post.title }}
-        />
         <WebView
           style={styles.webView}
           originWhitelist={["*"]}
           renderLoading={() => {
             return <Load />;
           }}
-          source={{ html: htmlStyle + props.route.params.post.content }}
+          source={{
+            html:
+              htmlStyle +
+              titleStyle +
+              titleTag +
+              props.route.params.post.content,
+          }}
         />
       </View>
     );
