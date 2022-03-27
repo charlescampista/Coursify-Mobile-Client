@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { theme } from "../../global/styles/theme";
 
 export const styles = StyleSheet.create({
@@ -8,8 +8,15 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  title: {
+    color: theme.colors.TextGreen,
+    fontFamily: theme.fonts.listTitle,
+    fontSize: 22,
+    marginHorizontal: 15,
+    textAlign: "left",
+  },
   webView: {
-    width: 500,
+    width: Dimensions.get("window").width * 1,
     height: 500,
   },
 });
