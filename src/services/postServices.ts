@@ -15,10 +15,11 @@ export async function getPosts(quantityPerPage: number): Promise<Post[]> {
 
 export async function getPostsByCategory(
   categoryId: number,
-  quantityPerPage: number
+  quantityPerPage: number,
+  page: number
 ): Promise<Post[]> {
   let response = await api.get(
-    `/posts?categories=${categoryId}&per_page=${quantityPerPage}`
+    `/posts?categories=${categoryId}&per_page=${quantityPerPage}&page=${page}`
   );
   let posts: Post[] = response.data.map((item: any) =>
     convertObjectToPost(item)

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, ActivityIndicator } from "react-native";
 import { Category } from "../../data/@types/Category";
 import { Post } from "../../data/@types/Post";
 import { getPostsByCategory } from "../../services/postServices";
@@ -14,35 +14,38 @@ type Props = {
 
 export function CategoryListItem({ category, ...rest }: Props) {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [requestDone, setRequestDone] = useState<Boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<Boolean>(false);
 
   useEffect(() => {
-    getPostsByCategory(category.id, 10).then((response) => {
-      setPosts(response);
-      setRequestDone(true);
-    });
+    getPosts();
   }, []);
 
-  if (requestDone)
-    return (
-      <View style={styles.container}>
-        <View style={styles.headContainer}>
-          <Text style={styles.title}>{category.name}</Text>
-          <Text style={styles.more}>Ver Mais</Text>
-        </View>
+  async function getPosts() {
+    if (loading) return;
+    setLoading(true);
+    let response = await getPostsByCategory(category.id, 5, page);
+    setPosts([...posts, ...response]);
+    setLoading(false);
+    setPage(page + 1);
+  }
 
-        <FlatList
-          horizontal={true}
-          data={posts}
-          keyExtractor={(item) => item.id + ""}
-          renderItem={(arg) => <PostListItem post={arg.item} />}
-        />
+  return (
+    <View style={styles.container}>
+      <View style={styles.headContainer}>
+        <Text style={styles.title}>{category.name}</Text>
+        <Text style={styles.more}>Ver Mais</Text>
       </View>
-    );
-  else
-    return (
-      <View style={styles.container}>
-        <Load />
-      </View>
-    );
+
+      <FlatList
+        horizontal={true}
+        data={posts}
+        keyExtractor={(item) => item.id + ""}
+        renderItem={(arg) => <PostListItem post={arg.item} />}
+        onEndReached={getPosts}
+        onEndReachedThreshold={0.1}
+        ListFooterComponent={<ActivityIndicator size="large" color="#0000FF" />}
+      />
+    </View>
+  );
 }

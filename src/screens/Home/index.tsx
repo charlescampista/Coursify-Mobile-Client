@@ -12,7 +12,7 @@ export function Home() {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    getCategories(10).then((response: Category[]) => {
+    getCategories(8).then((response: Category[]) => {
       setCategories(response);
     });
   }, []);
