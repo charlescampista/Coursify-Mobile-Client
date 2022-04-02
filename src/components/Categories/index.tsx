@@ -19,7 +19,7 @@ export function Categories() {
     if (loading) return;
     setLoading(true);
     //PASS PAGE
-    let response = await getCategories(3);
+    let response = await getCategories(3, page);
     setCategories([...categories, ...response]);
     setLoading(false);
     setPage(page + 1);

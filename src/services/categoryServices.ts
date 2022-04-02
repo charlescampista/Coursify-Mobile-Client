@@ -2,9 +2,12 @@ import { Category } from "../data/@types/Category";
 import { api } from "./api";
 
 export async function getCategories(
-  quantityPerPage: number
+  quantityPerPage: number,
+  page: number
 ): Promise<Category[]> {
-  let response = await api.get(`/categories?per_page=${quantityPerPage}`);
+  let response = await api.get(
+    `/categories?per_page=${quantityPerPage}&page=${page}`
+  );
   let categories: Category[] = response.data.map(
     (item: any) =>
       ({
