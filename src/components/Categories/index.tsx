@@ -10,19 +10,30 @@ export function Categories() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<Boolean>(false);
   const [page, setPage] = useState<number>(1);
+  const [isLastPage, setIsLastPage] = useState<Boolean>(false);
 
   useEffect(() => {
     fetchCategoriesFromService();
   }, []);
 
   async function fetchCategoriesFromService() {
-    if (loading) return;
+    if (loading && !isLastPage) return;
     setLoading(true);
-    //PASS PAGE
-    let response = await getCategories(3, page);
-    setCategories([...categories, ...response]);
-    setLoading(false);
-    setPage(page + 1);
+    try {
+      let response = await getCategories(3, page);
+      if (response.length === 0) {
+        setCategories([...categories]);
+        setIsLastPage(true);
+        setLoading(false);
+      } else {
+        setCategories([...categories, ...response]);
+        setPage(page + 1);
+        setLoading(false);
+        setIsLastPage(false);
+      }
+    } catch (error) {
+      setLoading(false);
+    }
   }
 
   return (
@@ -33,7 +44,13 @@ export function Categories() {
       renderItem={({ item }) => <CategoryListItem category={item} />}
       onEndReached={fetchCategoriesFromService}
       onEndReachedThreshold={0.1}
-      ListFooterComponent={<ActivityIndicator size="large" color="#FF0000" />}
+      ListFooterComponent={
+        loading && !isLastPage ? (
+          <ActivityIndicator size="large" color="#FF0000" />
+        ) : (
+          <></>
+        )
+      }
     />
   );
 }
